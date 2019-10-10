@@ -14,24 +14,21 @@ from time import time
 import seaborn as sns
 from Distribuciones.Page import Page
 import tempfile
-class Page3(Page):
-    def __init__(self, *args, **kwargs): 
+
+class Geometrica(Page):
+
+    def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
-        lbl = tk.Label(self, text="Distribucción Normal", font=("Arial Bold", 20)).pack()
+        #Elementos
+        lbl = tk.Label(self, text="Distribucción Geométrica", font=("Arial Bold", 20)).pack()
         label = tk.Label(self, text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         label.pack(side="top")
 
         #Bloque lam
-        label_lam = tk.Label(self,text="Seleccione Metodo")
-        label_lam.pack(side="top")
-
-        OptionList = ["Teorema Central del Limite","Algoritmo de Box Muller"] 
-        self.variable = tk.StringVar(self)
-        self.variable.set(OptionList[0])
-
-        self.option = tk.OptionMenu(self, self.variable, *OptionList)
-        self.option.pack()      
-
+        label_prob = tk.Label(self,text="Ingrese el Valor de Probabilidad")
+        label_prob.pack(side="top")
+        self.prob = tk.Entry(self) 
+        self.prob.pack()       
 
         #Bloque Muestras
         label_muestras = tk.Label(self,text="Ingrese cantidad de muestras")  
@@ -44,48 +41,23 @@ class Page3(Page):
         self.simular.pack()
 
         #Almacenamiento de Estado
-        self.temporal_page3 = tempfile.TemporaryFile()
-        self.temporal_page3.write(b'0')
+        self.temporal_Geometrica = tempfile.TemporaryFile()
+        self.temporal_Geometrica.write(b'0')
 
         #Canvas
         self.canvas = tk.Canvas(self, width=600, height=400, background="black")
         self.fig = plt.figure()
 
-    def normal_BoxMuller(self,muestras):
-        X = []
-        U1 = self.Random(muestras)
-        U2 = self.Random(muestras)
-        for i in range(muestras):
-            
-            x = -2*np.log(U1[i])
-            x = x**(1/2)
-            x = x*np.cos(2*np.pi*U2[i])
-            X.append(x)
-            
-            y = -2*np.log(U1[i])
-            y = y**(1/2)
-            y = y*np.cos(2*np.pi*U2[i])
-            X.append(y)
-        return X
-
-    def normal(self,muestras): 
-        X = [] 
-        for i in range(muestras):
-            X.append(((sum(self.Random(muestras))-(muestras/2))/(np.sqrt(muestras/12)))) 
-        return(X)
-
     def simular(self):
-        self.temporal_page3.seek(0)
-        if(self.temporal_page3.read() == b'0'):
-            if(self.variable.get() == "Algoritmo de Box Muller" ):
-                x = self.normal_BoxMuller(int(self.muestras.get()))
-            else:
-                x = self.normal(int(self.muestras.get()))
+        self.temporal_Geometrica.seek(0)
+        if(self.temporal_Geometrica.read() == b'0'):
+
+            x = self.geometrica(float(self.prob.get()),int(self.muestras.get()))
             #Grafica
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
-            plt.title('Histograma de la Distribución Normal de Box Muller')
+            plt.title('Histograma de la Distribución Geometrica')
             plt.xlabel('$x$')
             plt.ylabel('Frecuencia de $x$')
             plt.grid(True)
@@ -95,17 +67,17 @@ class Page3(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             #Almacenamiento del Estado
-            self.temporal_page3.close()
-            self.temporal_page3 = tempfile.TemporaryFile()
-            self.temporal_page3.write(b'1')
+            self.temporal_Geometrica.close()
+            self.temporal_Geometrica = tempfile.TemporaryFile()
+            self.temporal_Geometrica.write(b'1')
         else:
             self.canvas.get_tk_widget().destroy()
-            x = self.normal_BoxMuller(int(self.muestras.get()))
-            
+            x = self.geometrica(float(self.prob.get()),int(self.muestras.get()))
+
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
-            plt.title('Histograma de la Distribución Normal del Teorema Central del Limite')
+            plt.title('Histograma de la Distribución Geometrica')
             plt.xlabel('$x$')
             plt.ylabel('Frecuencia de $x$')
             plt.grid(True) 
@@ -114,6 +86,13 @@ class Page3(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-            self.temporal_page3.close()
-            self.temporal_page3 = tempfile.TemporaryFile()
-            self.temporal_page3.write(b'1')
+            self.temporal_Geometrica.close()
+            self.temporal_Geometrica = tempfile.TemporaryFile()
+            self.temporal_Geometrica.write(b'1')
+
+    def geometrica(self,p,muestras):
+        U = self.Random(muestras)
+        X = []
+        for i in range(muestras):
+            X.append(1+(np.log(U[i])/(np.log(1-p))))
+        return(X)

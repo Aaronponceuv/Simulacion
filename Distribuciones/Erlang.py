@@ -15,7 +15,7 @@ import seaborn as sns
 from Distribuciones.Page import Page
 import tempfile
 
-class Page2(Page):
+class Erlang(Page):
 
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
@@ -46,8 +46,8 @@ class Page2(Page):
         self.simular.pack()
 
         #Almacenamiento de Estado
-        self.temporal_page2 = tempfile.TemporaryFile()
-        self.temporal_page2.write(b'0')
+        self.temporal_Erlang = tempfile.TemporaryFile()
+        self.temporal_Erlang.write(b'0')
 
         #Canvas
         self.canvas = tk.Canvas(self, width=600, height=400, background="black")
@@ -60,8 +60,8 @@ class Page2(Page):
         return(X)
 
     def simular(self):
-        self.temporal_page2.seek(0)
-        if(self.temporal_page2.read() == b'0'):
+        self.temporal_Erlang.seek(0)
+        if(self.temporal_Erlang.read() == b'0'):
             x = self.erlang(int(self.k.get()),int(self.lam.get()),int(self.muestras.get()))
             #Grafica
             sns.set()
@@ -77,9 +77,9 @@ class Page2(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             #Almacenamiento del Estado
-            self.temporal_page2.close()
-            self.temporal_page2 = tempfile.TemporaryFile()
-            self.temporal_page2.write(b'1')
+            self.temporal_Erlang.close()
+            self.temporal_Erlang = tempfile.TemporaryFile()
+            self.temporal_Erlang.write(b'1')
         else:
             self.canvas.get_tk_widget().destroy()
             x = self.erlang(int(self.k.get()),int(self.lam.get()),int(self.muestras.get()))
@@ -96,6 +96,6 @@ class Page2(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-            self.temporal_page2.close()
-            self.temporal_page2 = tempfile.TemporaryFile()
-            self.temporal_page2.write(b'1')
+            self.temporal_Erlang.close()
+            self.temporal_Erlang = tempfile.TemporaryFile()
+            self.temporal_Erlang.write(b'1')

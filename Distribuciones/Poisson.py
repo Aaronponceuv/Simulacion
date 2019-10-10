@@ -15,7 +15,7 @@ import seaborn as sns
 from Distribuciones.Page import Page
 import tempfile
 
-class Page6(Page):
+class Poisson(Page):
 
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
@@ -41,16 +41,16 @@ class Page6(Page):
         self.simular.pack()
 
         #Almacenamiento de Estado
-        self.temporal_page6 = tempfile.TemporaryFile()
-        self.temporal_page6.write(b'0')
+        self.temporal_Poisson = tempfile.TemporaryFile()
+        self.temporal_Poisson.write(b'0')
 
         #Canvas
         self.canvas = tk.Canvas(self, width=600, height=400, background="black")
         self.fig = plt.figure()
 
     def simular(self):
-        self.temporal_page6.seek(0)
-        if(self.temporal_page6.read() == b'0'):
+        self.temporal_Poisson.seek(0)
+        if(self.temporal_Poisson.read() == b'0'):
 
             x = self.poisson(int(self.lam.get()),int(self.muestras.get()))
             #Grafica
@@ -67,9 +67,9 @@ class Page6(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             #Almacenamiento del Estado
-            self.temporal_page6.close()
-            self.temporal_page6 = tempfile.TemporaryFile()
-            self.temporal_page6.write(b'1')
+            self.temporal_Poisson.close()
+            self.temporal_Poisson = tempfile.TemporaryFile()
+            self.temporal_Poisson.write(b'1')
         else:
             self.canvas.get_tk_widget().destroy()
             x = self.poisson(int(self.lam.get()),int(self.muestras.get()))
@@ -86,9 +86,9 @@ class Page6(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-            self.temporal_page6.close()
-            self.temporal_page6 = tempfile.TemporaryFile()
-            self.temporal_page6.write(b'1')
+            self.temporal_Poisson.close()
+            self.temporal_Poisson = tempfile.TemporaryFile()
+            self.temporal_Poisson.write(b'1')
 
     def poisson(self,lam,muestras):
         X = []

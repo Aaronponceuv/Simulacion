@@ -8,26 +8,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 
-from Distribuciones.page1 import Page1
-from Distribuciones.page2 import Page2
-from Distribuciones.page3 import Page3
-from Distribuciones.page4 import Page4
-from Distribuciones.page5 import Page5
-from Distribuciones.page6 import Page6
-from Distribuciones.page7 import Page7
+from Distribuciones.Exponencial import Exponencial
+from Distribuciones.Erlang import Erlang
+from Distribuciones.Normal import Normal
+from Distribuciones.UnifomeContinua import UnifomeContinua
+from Distribuciones.Binomial import Binomial
+from Distribuciones.Poisson import Poisson
+from Distribuciones.Geometrica import Geometrica
 
 class MainView(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
         label = tk.Label(text="Distribuciones")
         label.place()
-        p1 = Page1(self)
-        p2 = Page2(self)
-        p3 = Page3(self)
-        p4 = Page4(self)
-        p5 = Page5(self)
-        p6 = Page6(self)
-        p7 = Page7(self)
+        p1 = Exponencial(self)
+        p2 = Erlang(self)
+        p3 = Normal(self)
+        p4 = UnifomeContinua(self)
+        p5 = Binomial(self)
+        p6 = Poisson(self)
+        p7 = Geometrica(self)
 
         buttonframe = tk.Frame(self)
         container = tk.Frame(self)
