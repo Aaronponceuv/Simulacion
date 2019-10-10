@@ -19,6 +19,7 @@ class Page2(Page):
 
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
+        lbl = tk.Label(self, text="Distribucción de Erlang", font=("Arial Bold", 20)).pack()
         label = tk.Label(self, text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         label.pack(side="top")
 
@@ -64,8 +65,12 @@ class Page2(Page):
             x = self.erlang(int(self.k.get()),int(self.lam.get()),int(self.muestras.get()))
             #Grafica
             sns.set()
-            fig = Figure(figsize=(2, 2), dpi=100)
-            plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c')
+            self.fig = plt.figure()
+            plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
+            plt.title('Histograma de la Distribución de Erlang')
+            plt.xlabel('$x$')
+            plt.ylabel('Frecuencia de $x$')
+            plt.grid(True)
 
             self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
@@ -82,6 +87,10 @@ class Page2(Page):
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
+            plt.title('Histograma de la Distribución de Erlang')
+            plt.xlabel('$x$')
+            plt.ylabel('Frecuencia de $x$')
+            plt.grid(True) 
             self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)

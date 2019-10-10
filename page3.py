@@ -17,6 +17,7 @@ import tempfile
 class Page3(Page):
     def __init__(self, *args, **kwargs): 
         Page.__init__(self, *args, **kwargs)
+        lbl = tk.Label(self, text="Distribucción Normal", font=("Arial Bold", 20)).pack()
         label = tk.Label(self, text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         label.pack(side="top")
 
@@ -25,11 +26,11 @@ class Page3(Page):
         label_lam.pack(side="top")
 
         OptionList = ["Teorema Central del Limite","Algoritmo de Box Muller"] 
-        variable = tk.StringVar(self)
-        variable.set(OptionList[0])
+        self.variable = tk.StringVar(self)
+        self.variable.set(OptionList[0])
 
-        w = tk.OptionMenu(self, variable, *OptionList)
-        w.pack()      
+        self.option = tk.OptionMenu(self, self.variable, *OptionList)
+        self.option.pack()      
 
 
         #Bloque Muestras
@@ -76,11 +77,18 @@ class Page3(Page):
     def simular(self):
         self.temporal_page3.seek(0)
         if(self.temporal_page3.read() == b'0'):
-            x = self.normal_BoxMuller(int(self.muestras.get()))
+            if(self.variable.get() == "Algoritmo de Box Muller" ):
+                x = self.normal_BoxMuller(int(self.muestras.get()))
+            else:
+                x = self.normal(int(self.muestras.get()))
             #Grafica
             sns.set()
-            fig = Figure(figsize=(2, 2), dpi=100)
-            plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c')
+            self.fig = plt.figure()
+            plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
+            plt.title('Histograma de la Distribución Normal de Box Muller')
+            plt.xlabel('$x$')
+            plt.ylabel('Frecuencia de $x$')
+            plt.grid(True)
 
             self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
@@ -97,6 +105,10 @@ class Page3(Page):
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
+            plt.title('Histograma de la Distribución Normal del Teorema Central del Limite')
+            plt.xlabel('$x$')
+            plt.ylabel('Frecuencia de $x$')
+            plt.grid(True) 
             self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)

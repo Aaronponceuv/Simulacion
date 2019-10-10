@@ -49,8 +49,8 @@ class MainView(tk.Frame):
         b3 = tk.Button(buttonframe, text="Distribucion Normal", command=p3.lift)
         b4 = tk.Button(buttonframe, text="Distribucion Unifome Continua", command=p4.lift)
         b5 = tk.Button(buttonframe, text="Distribucion Binomial", command=p5.lift)
-        b6 = tk.Button(buttonframe, text="Distribucion Unifome Continua", command=p6.lift)
-        b7 = tk.Button(buttonframe, text="Distribucion Binomial", command=p7.lift)
+        b6 = tk.Button(buttonframe, text="Distribucion Poisson", command=p6.lift)
+        b7 = tk.Button(buttonframe, text="Distribucion Geometrica", command=p7.lift)
 
         b1.pack(side="left")
         b2.pack(side="left")
@@ -68,5 +68,5 @@ if __name__ == "__main__":
     main = MainView(root)
 
     main.pack(side="top", fill="both", expand=True)
-    root.wm_geometry("1200x500")
+    root.wm_geometry("1200x680")
     root.mainloop()

@@ -20,6 +20,7 @@ class Page1(Page):
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
         #Elementos
+        lbl = tk.Label(self, text="Distribucción Exponencial", font=("Arial Bold", 20)).pack()
         label = tk.Label(self, text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         label.pack(side="top")
 
@@ -44,7 +45,7 @@ class Page1(Page):
         self.temporal_page1.write(b'0')
 
         #Canvas
-        self.canvas = tk.Canvas(self, width=600, height=400, background="black")
+        self.canvas = tk.Canvas(self, width=300, height=300, background="black")
         self.fig = plt.figure()
 
     def simular(self):
@@ -52,12 +53,18 @@ class Page1(Page):
         if(self.temporal_page1.read() == b'0'):
 
             x = self.exponencial(int(self.lam.get()),int(self.muestras.get()))
+            print(x)
             #Grafica
             sns.set()
-            fig = Figure(figsize=(2, 2), dpi=100)
-            plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c')
+            self.fig = plt.figure()
+            #plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c')
+            plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
+            plt.title('Histograma de la Distribución Exponencial')
+            plt.xlabel('$x$')
+            plt.ylabel('Frecuencia de $x$')
+            plt.grid(True)
 
-            self.canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
+            self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
@@ -72,6 +79,10 @@ class Page1(Page):
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
+            plt.title('Histograma de la Distribución Exponencial')
+            plt.xlabel('$x$')
+            plt.ylabel('Frecuencia de $x$')
+            plt.grid(True)
             self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)

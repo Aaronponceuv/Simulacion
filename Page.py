@@ -1,6 +1,5 @@
 import tkinter as tk
-import time
-
+from time import time
 class Page(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -12,7 +11,7 @@ class Page(tk.Frame):
         a = 16807
         m = (2**31) -(1)
         b = 0
-        Xn = time.time() #semilla (debe cambiar para generar la Erlang, no se me ocurrio otro metodo para hacerla variar)
+        Xn = time() #semilla (debe cambiar para generar la Erlang, no se me ocurrio otro metodo para hacerla variar)
         for i in range(ciclo):
             Xn1 = self.formula(a,b,Xn,m)
             ri = self.aleatorio(Xn1,m)
