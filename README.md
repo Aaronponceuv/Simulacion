@@ -1,7 +1,7 @@
 # Simulación de Numeros Aleatorios
 
 Simulador de numeros aleatorios por medio del Generador Congruencial Multiplicativo
-### Comenzando 🚀
+# Comenzando 🚀
 
 Estas instrucciones le proporcionarán una guia para la ejecución del Simulador en su máquina local para fines de desarrollo y prueba
 ### Pre-requisitos 📋
