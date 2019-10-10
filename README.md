@@ -1,4 +1,4 @@
-# Simulacion de Numeros Aleatorios
+# Simulación de Numeros Aleatorios
 
 Simulador de numeros aleatorios por medio del Generador Congruencial Multiplicativo
 ## Getting Started
@@ -20,15 +20,15 @@ tkinter v8.6
 Comando para la instalacion de las librerias necesarias
 
 ```
-sudo apt install python3.5.2
-python -m pip install -U pip
-pip install numpy
-pip install -U matplotlib
-apt-get install python-tk
+$ sudo apt install python3.5.2
+$ python -m pip install -U pip
+$ pip install numpy
+$ pip install -U matplotlib
+$ apt-get install python-tk
 
 ```
 
-## Running Simulacion
+## Running Simulación
 
 Ejecutar script main.py en la consola de su Sistema Operativo
 
@@ -40,7 +40,3 @@ $ python main.py
 
 * **Aaron Ponce Sandoval** - **Sebastian Rubio** 
 
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
