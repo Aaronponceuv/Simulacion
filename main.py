@@ -15,6 +15,7 @@ from Distribuciones.UnifomeContinua import UnifomeContinua
 from Distribuciones.Binomial import Binomial
 from Distribuciones.Poisson import Poisson
 from Distribuciones.Geometrica import Geometrica
+from Distribuciones.UniformeDiscreta import UniformeDiscreta
 
 class MainView(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -28,6 +29,7 @@ class MainView(tk.Frame):
         p5 = Binomial(self)
         p6 = Poisson(self)
         p7 = Geometrica(self)
+        p8 = UniformeDiscreta(self)
 
         buttonframe = tk.Frame(self)
         container = tk.Frame(self)
@@ -41,6 +43,7 @@ class MainView(tk.Frame):
         p5.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         p6.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         p7.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        p8.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
         b1 = tk.Button(buttonframe, text="Distribucion Exponencial", command=p1.lift)
         b2 = tk.Button(buttonframe, text="Distribucion Erlang", command=p2.lift)
@@ -49,7 +52,8 @@ class MainView(tk.Frame):
         b5 = tk.Button(buttonframe, text="Distribucion Binomial", command=p5.lift)
         b6 = tk.Button(buttonframe, text="Distribucion Poisson", command=p6.lift)
         b7 = tk.Button(buttonframe, text="Distribucion Geometrica", command=p7.lift)
-
+        b8 = tk.Button(buttonframe, text="Distribucion Uniforme Discreta", command=p8.lift)
+        
         b1.pack(side="left")
         b2.pack(side="left")
         b3.pack(side="left")
@@ -57,6 +61,7 @@ class MainView(tk.Frame):
         b5.pack(side="left")
         b6.pack(side="left")
         b7.pack(side="left")
+        b8.pack(side="left")
 
         p1.show()
 
