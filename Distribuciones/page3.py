@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 import seaborn as sns
-from Page import Page
+from Distribuciones.Page import Page
 import tempfile
 class Page3(Page):
     def __init__(self, *args, **kwargs): 

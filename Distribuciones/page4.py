@@ -12,23 +12,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 import seaborn as sns
-from Page import Page
+from Distribuciones.Page import Page
 import tempfile
 
-class Page7(Page):
+class Page4(Page):
 
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
-        #Elementos
-        lbl = tk.Label(self, text="Distribucción Geométrica", font=("Arial Bold", 20)).pack()
+        lbl = tk.Label(self, text="Distribucción Uniforme Continua", font=("Arial Bold", 20)).pack()
         label = tk.Label(self, text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         label.pack(side="top")
 
-        #Bloque lam
-        label_prob = tk.Label(self,text="Ingrese el Valor de Probabilidad")
-        label_prob.pack(side="top")
-        self.prob = tk.Entry(self) 
-        self.prob.pack()       
+        #Bloque a
+        label_a = tk.Label(self,text="Ingrese el Valor de a")
+        label_a.pack(side="top")
+        self.a = tk.Entry(self) 
+        self.a.pack()       
+
+        #Bloque b
+        label_b = tk.Label(self,text="Ingrese b")  
+        label_b.pack()
+        self.b = tk.Entry(self)
+        self.b.pack()
 
         #Bloque Muestras
         label_muestras = tk.Label(self,text="Ingrese cantidad de muestras")  
@@ -41,23 +46,29 @@ class Page7(Page):
         self.simular.pack()
 
         #Almacenamiento de Estado
-        self.temporal_page7 = tempfile.TemporaryFile()
-        self.temporal_page7.write(b'0')
+        self.temporal_page4 = tempfile.TemporaryFile()
+        self.temporal_page4.write(b'0')
 
         #Canvas
         self.canvas = tk.Canvas(self, width=600, height=400, background="black")
         self.fig = plt.figure()
 
-    def simular(self):
-        self.temporal_page7.seek(0)
-        if(self.temporal_page7.read() == b'0'):
+    def uniforme(self,a,b,muestras):
+        U = self.Random(muestras)
+        X = []
+        for i in range(muestras):
+            X.append(a+(U[i]*(b-a)))
+        return X
 
-            x = self.geometrica(float(self.prob.get()),int(self.muestras.get()))
+    def simular(self):
+        self.temporal_page4.seek(0)
+        if(self.temporal_page4.read() == b'0'):
+            x = self.uniforme(int(self.a.get()),int(self.b.get()),int(self.muestras.get()))
             #Grafica
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
-            plt.title('Histograma de la Distribución Geometrica')
+            plt.title('Histograma de la Distribución Uniforme Continua')
             plt.xlabel('$x$')
             plt.ylabel('Frecuencia de $x$')
             plt.grid(True)
@@ -67,17 +78,17 @@ class Page7(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             #Almacenamiento del Estado
-            self.temporal_page7.close()
-            self.temporal_page7 = tempfile.TemporaryFile()
-            self.temporal_page7.write(b'1')
+            self.temporal_page4.close()
+            self.temporal_page4 = tempfile.TemporaryFile()
+            self.temporal_page4.write(b'1')
         else:
             self.canvas.get_tk_widget().destroy()
-            x = self.geometrica(float(self.prob.get()),int(self.muestras.get()))
+            x = self.uniforme(int(self.a.get()),int(self.b.get()),int(self.muestras.get()))
 
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
-            plt.title('Histograma de la Distribución Geometrica')
+            plt.title('Histograma de la Distribución Uniforme Continua')
             plt.xlabel('$x$')
             plt.ylabel('Frecuencia de $x$')
             plt.grid(True) 
@@ -86,13 +97,6 @@ class Page7(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-            self.temporal_page7.close()
-            self.temporal_page7 = tempfile.TemporaryFile()
-            self.temporal_page7.write(b'1')
-
-    def geometrica(self,p,muestras):
-        U = self.Random(muestras)
-        X = []
-        for i in range(muestras):
-            X.append(1+(np.log(U[i])/(np.log(1-p))))
-        return(X)
+            self.temporal_page4.close()
+            self.temporal_page4 = tempfile.TemporaryFile()
+            self.temporal_page4.write(b'1')

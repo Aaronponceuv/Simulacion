@@ -7,16 +7,14 @@ from matplotlib.figure import Figure
 import numpy as np
 import matplotlib.pyplot as plt
 from time import time
-N = 100000
 
-#Vistas
-from page1 import Page1
-from page2 import Page2
-from page3 import Page3
-from page4 import Page4
-from page5 import Page5
-from page6 import Page6
-from page7 import Page7
+from Distribuciones.page1 import Page1
+from Distribuciones.page2 import Page2
+from Distribuciones.page3 import Page3
+from Distribuciones.page4 import Page4
+from Distribuciones.page5 import Page5
+from Distribuciones.page6 import Page6
+from Distribuciones.page7 import Page7
 
 class MainView(tk.Frame):
     def __init__(self, *args, **kwargs):

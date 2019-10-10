@@ -12,15 +12,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 import seaborn as sns
-from Page import Page
+from Distribuciones.Page import Page
 import tempfile
 
-class Page1(Page):
+class Page2(Page):
 
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
-        #Elementos
-        lbl = tk.Label(self, text="Distribucción Exponencial", font=("Arial Bold", 20)).pack()
+        lbl = tk.Label(self, text="Distribucción de Erlang", font=("Arial Bold", 20)).pack()
         label = tk.Label(self, text="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         label.pack(side="top")
 
@@ -29,6 +28,12 @@ class Page1(Page):
         label_lam.pack(side="top")
         self.lam = tk.Entry(self) 
         self.lam.pack()       
+
+        #Bloque K
+        label_k = tk.Label(self,text="Ingrese K")  
+        label_k.pack()
+        self.k = tk.Entry(self)
+        self.k.pack()
 
         #Bloque Muestras
         label_muestras = tk.Label(self,text="Ingrese cantidad de muestras")  
@@ -41,25 +46,28 @@ class Page1(Page):
         self.simular.pack()
 
         #Almacenamiento de Estado
-        self.temporal_page1 = tempfile.TemporaryFile()
-        self.temporal_page1.write(b'0')
+        self.temporal_page2 = tempfile.TemporaryFile()
+        self.temporal_page2.write(b'0')
 
         #Canvas
-        self.canvas = tk.Canvas(self, width=300, height=300, background="black")
+        self.canvas = tk.Canvas(self, width=600, height=400, background="black")
         self.fig = plt.figure()
 
-    def simular(self):
-        self.temporal_page1.seek(0)
-        if(self.temporal_page1.read() == b'0'):
+    def erlang(self,k,lam,muestras):
+        X = []
+        for i in range(muestras):
+            X.append((-1/lam)*sum(np.log(self.Random(k))))
+        return(X)
 
-            x = self.exponencial(int(self.lam.get()),int(self.muestras.get()))
-            print(x)
+    def simular(self):
+        self.temporal_page2.seek(0)
+        if(self.temporal_page2.read() == b'0'):
+            x = self.erlang(int(self.k.get()),int(self.lam.get()),int(self.muestras.get()))
             #Grafica
             sns.set()
             self.fig = plt.figure()
-            #plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c')
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
-            plt.title('Histograma de la Distribución Exponencial')
+            plt.title('Histograma de la Distribución de Erlang')
             plt.xlabel('$x$')
             plt.ylabel('Frecuencia de $x$')
             plt.grid(True)
@@ -69,33 +77,25 @@ class Page1(Page):
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             #Almacenamiento del Estado
-            self.temporal_page1.close()
-            self.temporal_page1 = tempfile.TemporaryFile()
-            self.temporal_page1.write(b'1')
+            self.temporal_page2.close()
+            self.temporal_page2 = tempfile.TemporaryFile()
+            self.temporal_page2.write(b'1')
         else:
             self.canvas.get_tk_widget().destroy()
-            x = self.exponencial(int(self.lam.get()),int(self.muestras.get()))
+            x = self.erlang(int(self.k.get()),int(self.lam.get()),int(self.muestras.get()))
 
             sns.set()
             self.fig = plt.figure()
             plt.hist(x,density='True',bins=50,alpha=0.8,histtype='bar', edgecolor='c') 
-            plt.title('Histograma de la Distribución Exponencial')
+            plt.title('Histograma de la Distribución de Erlang')
             plt.xlabel('$x$')
             plt.ylabel('Frecuencia de $x$')
-            plt.grid(True)
+            plt.grid(True) 
             self.canvas = FigureCanvasTkAgg(self.fig, master=self)  # A tk.DrawingArea.
             self.canvas.draw()
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
             self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-            self.temporal_page1.close()
-            self.temporal_page1 = tempfile.TemporaryFile()
-            self.temporal_page1.write(b'1')
-
-    def exponencial(self,lam,N):
-        X = []
-        U = self.Random(N)
-        for i in range(N):
-            X.append(np.log(U[i])/(-lam))
-        return(X)
-   
+            self.temporal_page2.close()
+            self.temporal_page2 = tempfile.TemporaryFile()
+            self.temporal_page2.write(b'1')
